@@ -40,6 +40,8 @@ However we are still stuck as even if we can measure $r$, we still need $t_I$. D
 
 ### Viral load data
 
-Viral load data can be collected via RT-PCR tests where the Ct value is a measure of the viral load in a sample. The idea is to take a set of viral loads $\\{v_i\\}$ that were collected from individuals who were infected during the exponential growth phase of the epidemic and use them to infer the average age of infection $t_I$. To do this, we assume that a person's viral load is function of their age of infection $\nu(\tau)$. For the sake of simplicity, we made $\nu$ deterministic though in reality there is considerable variability between individuals. 
+Viral load data can be collected via RT-PCR tests where the Ct value is a measure of the viral load in a sample. The idea is to take a set of viral loads $\\{v_i\\}$ that were collected from individuals who were infected during the exponential growth phase of the epidemic and use them to infer the average age of infection $t_I$. To do this, we assume that a person's viral load is function of their age of infection $\nu(\tau)$. For the sake of simplicity, we made $\nu$ deterministic though in reality there is considerable variability between individuals. It is a piecewise function which is composed of two functions, $\nu_G$ and $\nu_D$, which describe the viral load during the growth and decline stage. We assume that upon infection individuals having an initial viral load $\nu_G(0)$ which grows monotonically to a maximum value $\nu_G(\tau_+) = \nu_D(\tau_-)$ whereupon it then decays monotonically towards 0:
 
-![Viral load function $\nu(\tau)$](https://github.com/briantreacy/epi_param_estimation_viral_loads/main/images/each_viral_load_has_two_ages_of_infection.png?raw=true)
+![Viral load function $\nu(\tau)$](https://github.com/briantreacy/epi_param_estimation_viral_loads/blob/main/images/each_viral_load_has_two_ages_of_infection.png?raw=true)
+
+The particular form we choose for $\nu_G$ and $\nu_D$ 
