@@ -136,3 +136,4 @@ Given a set of viral loads $[v_1, v_2, ..., v_{N_v} ]$, we can construct a maxim
 We tested the MLE on virtual data. For a given value of $r$ and $t_I$, we generated viral loads by drawing ages-of-infection from $\mathcal{A}(\tau)$ and applying $\nu$ to them. We then worked backwards by applying our MLE to those viral loads along with $r$, which is assumed to be observed from case incidence data. The goal was to estimate the $\rho$ which is then used to estimate $\mathbb{R}_0$. As seen below, as the sample of viral loads that we used to estimate $\mathbb{R}_0$ became larger, our estimates became more accurate: 
 
 ![Viral load function $\nu(\tau)$](https://github.com/briantreacy/epi_param_estimation_viral_loads/blob/main/images/boxplot_R0_estimates_SIR.png?raw=true)
+
