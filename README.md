@@ -1,6 +1,6 @@
 ## Estimating epidemic parameters from viral load data
 
-I present a summary of one of my PhD projects, which outlined a method to estimate the parameters of a class of epidemic models given one had access to the rate of exponential growth $r$ seen in the infected population during the beginning of an epidemic along with viral load data collected during this same period. We demonstrate with an SIR model:
+I present a summary of one of my PhD projects, which outlined a method to estimate the parameters of a class of epidemic models given one had access to the rate of exponential growth $r$ observed in the infected population during the beginning of an epidemic along with viral load data collected during this same period. We demonstrate with an SIR model:
 ```math
 \begin{equation}
 \begin{aligned}
@@ -10,7 +10,7 @@ I present a summary of one of my PhD projects, which outlined a method to estima
 \end{aligned}
 \end{equation}
 ```
-Let $\mathcal{A}(\tau, t)$ be the proportion of the infected population at time $t$ that have age-of-infection $\tau$. The disease incidence $i(t)$ is the number of people who became infected at time $t$, while $K(\tau)$ is the probability that someone infected $\tau$ units ago is still infected now. Then,
+Let $\mathcal{A}(\tau, t)$ be the proportion of the infected population at time $t$ that have age-of-infection $\tau$, which means they were infected $\tau$ time units ago. The disease incidence $i(t)$ is the number of people who became infected at time $t$, while $K(\tau)$ is the probability that someone with age-of-infection $\tau$ is still infected now. Then,
 ```math
 \begin{align*}
 	\mathcal{A}(\tau, t) &= \frac{i(t - \tau) K(\tau)}{\int_0^t i(t-x)K(x) \mathrm{d}x}
@@ -30,21 +30,21 @@ How can we put this to use?
 
 ### Shortcomings of the $\mathbb{R}_0 - r$ method
 
-A key challenge for modellers when confronted with an epidemic is to determine the basic reproductive number $\mathbb{R}_0$. This is a measure of infectiousness and can be used to estimate the total amount of people that would be infected if the disease was let to propogate assuming nobody changed their behaviour in response to the outbreak as well as the vaccination coverage needed to prevent the epidemic occurring. 
+A key challenge for modellers when confronted with an epidemic is to determine the basic reproductive number $\mathbb{R}_0$. This is a measure of infectiousness and can be used to estimate the total amount of people that would be infected if the disease was let to propogate as well as the vaccination coverage needed to prevent the epidemic occurring. 
 
-In the SIR model, $\mathbb{R}_0 = \frac{\beta}{\gamma} = \beta t_I$ where $t_I = \frac{1}{\gamma}$ is the expected time an infected person will spend infected, i.e. in the I compartment of the model. $\mathbb{R}_0$ is a theoretical quantity that equals the amount of infections that would be caused by one infectious person in a totally susceptible population. It is difficult to directly measure and thus indirect approaches are used. Among one is the $\mathbb{R}_0-r$ relation that connects the basic reproductive number to the exponential growth rate in disease incidence during the beginning of the epidemic. This is useful as $r$ is much easier to directly measure by, for example, fitting an exponential curve to the amount of reported cases. In the SIR model, the $\mathbb{R}_0-r$ relation is
+In the SIR model, $\mathbb{R}_0 = \frac{\beta}{\gamma} = \beta t_I$ where $t_I = \frac{1}{\gamma}$ is the expected time an infected person will spend infected, i.e. in the $I$ compartment of the model. $\mathbb{R}_0$ is a theoretical quantity that equals the expected amount of infections that would be caused by one infectious person in a totally susceptible population. It is difficult to directly measure and thus indirect approaches are used. Among one is the $\mathbb{R}_0-r$ relation that connects the basic reproductive number to the exponential growth rate in disease incidence during the beginning of the epidemic. This is useful as $r$ can be directly measured by, for example, fitting an exponential curve to the amount of reported cases. In the SIR model, the $\mathbb{R}_0-r$ relation is
 ```math
 \mathbb{R}_0 = \frac{1}{1 + rt_I}
 ```
-However we are still stuck as even if we can measure $r$, we still need $t_I$. Directly measuring the length of people's infectious times is difficult. It can be difficult to estimate exactly when someone was infected though still possible with contact tracing data. Exactly when one stopped being infectious is harder still. 
+However we are still stuck as even if we can measure $r$, we still need $t_I$. Directly measuring the length of people's infectious times is difficult due to uncertainty determining exactly when someone was infected though this is possible with contact tracing data. Dertermining exactly when one stopped being infectious presents a harder challenge still. We therefore sought a path that avoided this.
 
 ### Viral load data
 
-Viral load data can be collected via RT-PCR tests where the Ct value is a measure of the viral load in a sample. The idea is to take a set of viral loads $\\{v_i\\}$ that were collected from individuals who were infected during the exponential growth phase of the epidemic and use them to infer the average age of infection $t_I$. To do this, we assume that a person's viral load is function of their age of infection $\nu(\tau)$. For the sake of simplicity, we made $\nu$ deterministic though in reality there is considerable variability between individuals. It is a piecewise function which is composed of two functions, $\nu_G$ and $\nu_D$, which describe the viral load during the growth and decline stage. We assume that upon infection individuals having an initial viral load $\nu_G(0)$ which grows monotonically to a maximum value $\nu_G(\tau^+) = \nu_D(\tau^+)$ whereupon it then decays monotonically towards 0:
+Viral load data can be collected via RT-PCR tests where the Ct value is a measure of the viral load in a sample. The idea is to take a set of viral loads $\\{v_i\\}$ that were collected from individuals who were infected during the exponential growth phase of the epidemic and use them to infer the average age of infection $t_I$. To do this, we assume that a person's viral load is function $\nu$ of their age-of-infection $\tau$. For the sake of simplicity, we made $\nu$ deterministic though in reality there is considerable variability between individual's viral loads at a given age of infection. We assumed it to be a piecewise function composed of $\nu_G$ and $\nu_D$, which describe the viral load during the growth and decay stage. We assume that upon infection individuals having an initial viral load $\nu_G(0)$ which grows monotonically to a maximum value $\nu_G(\tau^+) = \nu_D(\tau^+)$ whereupon it then decays monotonically towards 0:
 
 ![Viral load function $\nu(\tau)$](https://github.com/briantreacy/epi_param_estimation_viral_loads/blob/main/images/each_viral_load_has_two_ages_of_infection.png?raw=true)
 
-The particular form I choose for $\nu_G$ and $\nu_D$ was exponential functions
+The particular forms I choose for $\nu_G$ and $\nu_D$ were exponential functions:
 ```math
 \nu(\tau) =
 \begin{cases}
@@ -54,7 +54,6 @@ The particular form I choose for $\nu_G$ and $\nu_D$ was exponential functions
 	\end{aligned}
 \end{cases}
 ```
-
 Importantly, we can derive the inverse function $\nu^{-1}$ that returns the set of ages-of-infection that could have produced a given viral load:
 ```math
 \nu^{-1}(v) =
@@ -64,7 +63,7 @@ Importantly, we can derive the inverse function $\nu^{-1}$ that returns the set 
 \end{cases}
 ```
 ### Viral load distribution $\mathcal{V}$
-Using $\mathcal{A}(\tau)$ and $\nu(\tau)$, we can derive the probability distribution $\mathcal{V}$ of the viral loads among the infected during the exponential growth phase of the epidemic:
+Using $\mathcal{A}(\tau)$ and $\nu(\tau)$, we can derive the distribution $\mathcal{V}$ of the viral loads among the infected population during the exponential growth phase of the epidemic:
 ```math
 \begin{align*}
 	1 &= \int_{0}^{\infty} \mathcal{A}(\tau) \mathrm{d} \tau \qquad \text{as $\mathcal{A}$ is a probability distribution} \\
@@ -134,6 +133,6 @@ Given a set of viral loads $[v_1, v_2, ..., v_{N_v} ]$, we can construct a maxim
 	\mathcal{L}(\rho) = \prod_{i = 1}^{N_v} \mathcal{V}(v_i; \rho)
 \end{align*}
 ```
-We tested the MLE on virtual data as seen in figure \ref{fig:Boxplots of R0 estimates}. For a given value of $r$ and $t_I$, we generated viral loads by drawing ages-of-infection from $\mathcal{A}(\tau)$ and applying $\nu$ to them. We then worked backwards by applying our MLE to those viral loads along with $r$, which is assumed to be observed from case incidence data. The goal was to estimate the $\rho$ which is then used to estimate $\mathbb{R}_0$. 
+We tested the MLE on virtual data. For a given value of $r$ and $t_I$, we generated viral loads by drawing ages-of-infection from $\mathcal{A}(\tau)$ and applying $\nu$ to them. We then worked backwards by applying our MLE to those viral loads along with $r$, which is assumed to be observed from case incidence data. The goal was to estimate the $\rho$ which is then used to estimate $\mathbb{R}_0$. As seen below, as the sample of viral loads that we used to estimate $\mathbb{R}_0$ became larger, our estimates became more accurate: 
 
 ![Viral load function $\nu(\tau)$](https://github.com/briantreacy/epi_param_estimation_viral_loads/blob/main/images/boxplot_R0_estimates_SIR.png?raw=true)
