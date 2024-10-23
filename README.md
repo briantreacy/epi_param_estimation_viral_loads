@@ -1,3 +1,4 @@
+
 ## Estimating epidemic parameters from viral load data
 
 I present a summary of one of my PhD projects, which outlined a method to estimate the parameters of a class of epidemic models given one had access to the rate of exponential growth $r$ observed in the infected population during the beginning of an epidemic along with viral load data collected during this same period. We demonstrate with an SIR model:
@@ -30,13 +31,11 @@ How can we put this to use?
 
 ### Shortcomings of the $\mathbb{R}_0 - r$ method
 
-A key challenge for modellers when confronted with an epidemic is to determine the basic reproductive number $\mathbb{R}_0$. This is a measure of infectiousness and can be used to estimate the total amount of people that would be infected if the disease was let to propogate as well as the vaccination coverage needed to prevent the epidemic occurring. 
-
-In the SIR model, $\mathbb{R}_0 = \frac{\beta}{\gamma} = \beta t_I$ where $t_I = \frac{1}{\gamma}$ is the expected time an infected person will spend infected, i.e. in the $I$ compartment of the model. $\mathbb{R}_0$ is a theoretical quantity that equals the expected amount of infections that would be caused by one infectious person in a totally susceptible population. It is difficult to directly measure and thus indirect approaches are used. Among one is the $\mathbb{R}_0-r$ relation that connects the basic reproductive number to the exponential growth rate in disease incidence during the beginning of the epidemic. This is useful as $r$ can be directly measured by, for example, fitting an exponential curve to the amount of reported cases. In the SIR model, the $\mathbb{R}_0-r$ relation is
+A key challenge for modellers when confronted with an epidemic is to determine the basic reproductive number $\mathbb{R}_0$. This is an abstract measure of infectiousness which equals the expected amount of infections that would be caused by one infectious person in a totally susceptible population and can be used to estimate the total amount of people that would be infected if the disease was let to propogate as well as the vaccination coverage needed to prevent the epidemic occurring.  In the SIR model, $\mathbb{R}_0 = \frac{\beta}{\gamma} = \beta t_I$ where $t_I = \frac{1}{\gamma}$ is the expected time an infected person will spend infected, i.e. in the $I$ compartment of the model. $R_0$ is difficult to directly measure and thus indirect approaches are used. One such approach utilises the $\mathbb{R}_0-r$ relation that connects $R_0$ to the exponential growth rate $r$ in disease incidence during the beginning of the epidemic. This is useful as $r$ can be directly measured by, for example, fitting an exponential curve to the amount of reported cases. In the SIR model, the $\mathbb{R}_0-r$ relation is
 ```math
 \mathbb{R}_0 = \frac{1}{1 + rt_I}
 ```
-However we are still stuck as even if we can measure $r$, we still need $t_I$. Directly measuring the length of people's infectious times is difficult due to uncertainty determining exactly when someone was infected though this is possible with contact tracing data. Dertermining exactly when one stopped being infectious presents a harder challenge still. We therefore sought a path that avoided this.
+However we are still stuck as even if we can measure $r$, we still need $t_I$. Directly measuring the length of people's infectious times is difficult due to uncertainty determining exactly when someone was infected and when they stopped being infectious. We therefore sought a way to avoid this.
 
 ### Viral load data
 
