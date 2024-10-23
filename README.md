@@ -11,7 +11,7 @@ I present a summary of one of my PhD projects, which outlined a method to estima
 \end{aligned}
 \end{equation}
 ```
-Let $\mathcal{A}(\tau, t)$ be the proportion of the infected population at time $t$ that have age-of-infection $\tau$, which means they were infected $\tau$ time units ago. The disease incidence $i(t)$ is the number of people who became infected at time $t$, while $K(\tau)$ is the probability that someone with age-of-infection $\tau$ is still infected now. Then,
+Let $\mathcal{A}(\tau, t)$ be the proportion of the infected population at time $t$ that have age-of-infection $\tau$, which means they were infected $\tau$ time units ago. The disease incidence $i(t)$ represents the number of people who became infected at time $t$, while $K(\tau)$ is the probability that someone with age-of-infection $\tau$ is still infected. Then,
 ```math
 \begin{align*}
 	\mathcal{A}(\tau, t) &= \frac{i(t - \tau) K(\tau)}{\int_0^t i(t-x)K(x) \mathrm{d}x}
@@ -31,11 +31,11 @@ How can we put this to use?
 
 ### Shortcomings of the $\mathbb{R}_0 - r$ method
 
-A key challenge for modellers when confronted with an epidemic is to determine the basic reproductive number $\mathbb{R}_0$. This is an abstract measure of infectiousness which equals the expected amount of infections that would be caused by one infectious person in a totally susceptible population and can be used to estimate the total amount of people that would be infected if the disease was let to propogate as well as the vaccination coverage needed to prevent the epidemic occurring.  In the SIR model, $\mathbb{R}_0 = \frac{\beta}{\gamma} = \beta t_I$ where $t_I = \frac{1}{\gamma}$ is the expected time an infected person will spend infected, i.e. in the $I$ compartment of the model. $R_0$ is difficult to directly measure and thus indirect approaches are used. One such approach utilises the $\mathbb{R}_0-r$ relation that connects $R_0$ to the exponential growth rate $r$ in disease incidence during the beginning of the epidemic. This is useful as $r$ can be directly measured by, for example, fitting an exponential curve to the amount of reported cases. In the SIR model, the $\mathbb{R}_0-r$ relation is
+A key challenge for modellers when confronted with an epidemic is to determine the basic reproductive number $\mathbb{R}_0$. This is an abstract measure of infectiousness which equals the expected amount of infections that would be caused by one infectious person in a totally susceptible population and is useful when judging how many people will be infected over the course of the epidemic as well as the vaccination coverage required to prevent the outbreak.  In the SIR model, $\mathbb{R}_0 = \frac{\beta}{\gamma} = \beta t_I$ where $t_I = \frac{1}{\gamma}$ is the expected time an infected person will spend infected, i.e. in the $I$ compartment of the model. $R_0$ is difficult to directly measure and thus indirect approaches are used. One such approach utilises the $\mathbb{R}_0-r$ relation that connects $R_0$ to the exponential growth rate $r$ in disease incidence during the beginning of the epidemic. This is useful as $r$ can be directly measured by, for example, fitting an exponential curve to the amount of reported cases. In the SIR model, the $\mathbb{R}_0-r$ relation is
 ```math
 \mathbb{R}_0 = \frac{1}{1 + rt_I}
 ```
-However we are still stuck as even if we can measure $r$, we still need $t_I$. Directly measuring the length of people's infectious times is difficult due to uncertainty determining exactly when someone was infected and when they stopped being infectious. We therefore sought a way to avoid this.
+However we are still stuck as even if we can measure $r$, we still need $t_I$. Directly measuring the length of time people spend infectious is difficult due to our inability to determine exactly when someone was infected and when they stopped being infectious. We therefore sought a way to avoid this.
 
 ### Viral load data
 
@@ -132,7 +132,7 @@ Given a set of viral loads $[v_1, v_2, ..., v_{N_v} ]$, we can construct a maxim
 	\mathcal{L}(\rho) = \prod_{i = 1}^{N_v} \mathcal{V}(v_i; \rho)
 \end{align*}
 ```
-We tested the MLE on virtual data. For a given value of $r$ and $t_I$, we generated viral loads by drawing ages-of-infection from $\mathcal{A}(\tau)$ and applying $\nu$ to them. We then worked backwards by applying our MLE to those viral loads along with $r$, which is assumed to be observed from case incidence data. The goal was to estimate the $\rho$ which is then used to estimate $\mathbb{R}_0$. As seen below, as the sample of viral loads that we used to estimate $\mathbb{R}_0$ became larger, our estimates became more accurate: 
+I tested the MLE on virtual data. For a given value of $r$ and $t_I$, we generated viral loads by drawing ages-of-infection from $\mathcal{A}(\tau)$ and applying $\nu$ to them. We then worked backwards by applying our MLE to those viral loads along with $r$, which is assumed to be observed from case incidence data. The goal was to estimate the $\rho$ which is then used to estimate $\mathbb{R}_0$. As seen below, as the sample of viral loads that we used to estimate $\mathbb{R}_0$ became larger, our estimates became more accurate: 
 
 ![Viral load function $\nu(\tau)$](https://github.com/briantreacy/epi_param_estimation_viral_loads/blob/main/images/boxplot_R0_estimates_SIR.png?raw=true)
 
